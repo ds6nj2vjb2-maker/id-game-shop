@@ -1,0 +1,490 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Mali:wght@400;600;700&display=swap');
+
+/* ===== ชุดสีตามโลโก้ (แก้สีทั้งเว็บได้ที่นี่) ===== */
+:root {
+  --blood: #e01e2b;
+  --blood-dark: #6b0a12;
+  --night: #0a0507;
+  --card: #170a0d;
+  --text: #fbeaea;
+  --price: #ff5468;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--night);
+  background-image:
+    radial-gradient(circle at 85% 0%, rgba(224, 30, 43, 0.18), transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(107, 10, 18, 0.3), transparent 50%);
+  color: var(--text);
+  font-family: 'Mali', sans-serif;
+  margin: 0;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: var(--blood); }
+
+/* ===== สติกเกอร์ลอย ===== */
+body::before, body::after {
+  position: fixed; font-size: 36px; z-index: 0;
+  pointer-events: none; opacity: 0.6;
+  animation: float 6s ease-in-out infinite;
+}
+body::before { content: "🦇"; top: 25%; left: 4%; }
+body::after { content: "👻"; bottom: 8%; right: 4%; animation-delay: 2s; }
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* ===== เมนู ===== */
+.menu {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px;
+  padding: 12px;
+  background: rgba(10, 5, 7, 0.93);
+  border-bottom: 1px solid rgba(224, 30, 43, 0.5);
+}
+.menu a { color: var(--text); text-decoration: none; font-weight: 600; }
+.menu a.active { color: var(--blood); border-bottom: 3px solid var(--blood); }
+
+/* ===== ระบบหลายหน้า ===== */
+main { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 20px; }
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.section-title {
+  font-family: 'Creepster', 'Mali', sans-serif;
+  color: var(--blood);
+  letter-spacing: 1px;
+  text-shadow: 0 2px 0 #000, 0 0 12px rgba(224, 30, 43, 0.6);
+}
+.section-title::before { content: "🩸 "; }
+.hint { opacity: 0.7; font-size: 14px; }
+
+/* ===== หัวเว็บ ===== */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 40px 20px 50px;
+  margin: -20px -20px 20px;
+  background: linear-gradient(180deg, #000 0%, #2a0509 55%, #5c0b12 100%);
+  border-bottom: 2px solid var(--blood);
+  border-radius: 0 0 40px 40px;
+}
+.hero::before { content: "🕸️"; position: absolute; top: 8px; left: 10px; font-size: 46px; opacity: 0.7; }
+.hero::after {
+  content: "🕷️";
+  position: absolute; top: 10px; right: 24px; font-size: 28px;
+  transform-origin: top center;
+  animation: swing 3s ease-in-out infinite;
+}
+@keyframes swing {
+  0%, 100% { transform: rotate(12deg); }
+  50% { transform: rotate(-12deg); }
+}
+.logo-img {
+  width: 170px; height: 170px;
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(224, 30, 43, 0.7);
+  animation: float 5s ease-in-out infinite;
+}
+.hero h1 { font-size: 24px; margin: 12px 0 4px; }
+.hero p { opacity: 0.8; margin: 0; }
+.cta {
+  display: inline-block; margin-top: 16px;
+  background: var(--blood); color: white;
+  padding: 11px 26px; border-radius: 999px;
+  font-weight: 700; text-decoration: none;
+  box-shadow: 0 4px 0 var(--blood-dark);
+}
+.cta-alt {
+  background: transparent; color: var(--text);
+  border: 2px solid var(--text); box-shadow: none; margin-left: 8px;
+}
+
+/* ===== ปุ่ม ===== */
+button {
+  background: var(--blood); color: white;
+  border: none; padding: 10px 22px; border-radius: 999px;
+  font-family: inherit; font-size: 15px; font-weight: 700;
+  box-shadow: 0 3px 0 var(--blood-dark);
+}
+button:active { transform: translateY(3px); box-shadow: none; }
+button:disabled { background: #3a3033; color: #999; box-shadow: none; }
+#filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+#filters button {
+  background: transparent; color: var(--text);
+  border: 2px solid var(--blood); box-shadow: none;
+  padding: 6px 16px; font-size: 14px;
+}
+
+/* ===== การ์ดสินค้าแบบเล็ก แถวละ 4–5 ใบ ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+}
+@media (max-width: 600px) {
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+.card {
+  position: relative;
+  background: linear-gradient(180deg, var(--card), #0d0507);
+  border: 1px solid rgba(224, 30, 43, 0.45);
+  border-radius: 14px;
+  padding: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(224, 30, 43, 0.35); }
+.card::after {
+  content: "🦇";
+  position: absolute; top: -10px; right: -6px;
+  font-size: 22px; transform: rotate(15deg);
+}
+.card:nth-child(3n+2)::after { content: "👻"; }
+.card:nth-child(3n+3)::after { content: "🕷️"; }
+.card.sold::after { content: "💀"; }
+.card.sold { opacity: 0.45; }
+.card img {
+  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  border-radius: 10px; display: block;
+}
+.card h2 { font-size: 15px; margin: 8px 0 2px; line-height: 1.3; }
+.card p { font-size: 12px; margin: 0; opacity: 0.75; }
+.price { color: var(--price); font-size: 22px; font-weight: 700; }
+.card .price { font-size: 18px; opacity: 1; margin: 4px 0 8px; }
+.card button { width: 100%; padding: 8px; font-size: 14px; }
+
+/* ===== สไลด์ไอดีแรร์ ===== */
+.carousel-wrap { position: relative; }
+.carousel {
+  position: relative;
+  display: flex; gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px 4px;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar { display: none; }
+.slide {
+  position: relative;
+  flex: 0 0 80%; max-width: 380px;
+  scroll-snap-align: center;
+  background: var(--card);
+  border: 2px solid var(--blood);
+  border-radius: 20px;
+  overflow: hidden;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  from { box-shadow: 0 0 8px rgba(224, 30, 43, 0.4); }
+  to { box-shadow: 0 0 26px rgba(224, 30, 43, 0.9); }
+}
+.slide::before {
+  content: "";
+  position: absolute; top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transform: skewX(-20deg);
+  animation: shine 3s infinite;
+  z-index: 2; pointer-events: none;
+}
+@keyframes shine {
+  0% { left: -60%; }
+  60%, 100% { left: 130%; }
+}
+.slide img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+.slide-info { padding: 12px 14px; }
+.slide h3 { margin: 0; font-size: 20px; }
+.slide p { margin: 2px 0 6px; font-size: 13px; opacity: 0.8; }
+.slide-bottom { display: flex; justify-content: space-between; align-items: center; }
+.badge {
+  position: absolute; top: 10px; left: 10px; z-index: 3;
+  background: linear-gradient(90deg, var(--blood), var(--blood-dark));
+  padding: 3px 12px; border-radius: 999px;
+  font-weight: 700; font-size: 13px;
+  animation: pulse 1.2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+.nav {
+  position: absolute; top: 50%; z-index: 4;
+  transform: translateY(-50%);
+  width: 40px; height: 40px; padding: 0;
+  border-radius: 50%; font-size: 24px; line-height: 1;
+}
+.nav:active { transform: translateY(-50%) scale(0.9); }
+.prev { left: -4px; }
+.next { right: -4px; }
+.dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+.dot { width: 10px; height: 10px; border-radius: 999px; background: #3a1a1e; transition: all 0.3s; }
+.dot.active { width: 28px; background: var(--blood); }
+
+/* ===== หน้าสุ่มไอดี ===== */
+.gacha-box {
+  text-align: center;
+  background: var(--card);
+  border: 2px dashed var(--blood);
+  border-radius: 20px;
+  padding: 24px 16px;
+}
+.gacha-box select {
+  font-family: inherit; font-size: 16px;
+  padding: 6px 12px; border-radius: 999px;
+  border: 2px solid var(--blood);
+  background: var(--night); color: var(--text);
+  margin-left: 6px;
+}
+.gacha-screen {
+  margin: 20px auto; max-width: 360px; min-height: 90px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; font-size: 24px; font-weight: 700;
+  background: #000;
+  border: 3px solid var(--blood);
+  border-radius: 18px;
+  box-shadow: inset 0 0 20px rgba(224, 30, 43, 0.5);
+}
+.gacha-screen.spinning { color: var(--price); animation: shake 0.15s infinite; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+.gacha-screen.win { animation: glow 1s ease-in-out infinite alternate; }
+.gacha-btn { font-size: 20px; padding: 14px 36px; }
+#gacha-result { max-width: 260px; margin: 24px auto 0; }
+
+/* ===== วิธีสั่งซื้อ & รับประกัน ===== */
+.steps li { margin-bottom: 10px; }
+.steps li::marker { color: var(--blood); font-weight: 700; }
+#how .cta { margin-top: 10px; }
+.rules { list-style: none; padding: 0; }
+.rules li {
+  background: var(--card); padding: 10px 14px;
+  border-left: 3px solid var(--blood);
+  border-radius: 10px; margin-bottom: 8px;
+}
+.note {
+  background: #1f0a0c; border: 2px dashed var(--blood);
+  padding: 12px; border-radius: 12px; font-size: 14px;
+}
+
+/* ===== ท้ายเว็บ ===== */
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 30px;
+  background: #000;
+  border-top: 1px solid rgba(224, 30, 43, 0.4);
+}
+footer::before {
+  content: "🦇 🕸️ 🩸 👻 🎃";
+  display: block; font-size: 22px; letter-spacing: 8px; margin-bottom: 8px;
+}
+
+/* ===== ฝนอีโมจิ ===== */
+.confetti {
+  position: fixed; top: -50px; font-size: 30px;
+  z-index: 100; pointer-events: none;
+  animation: fall 2s linear forwards;
+}
+@keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+/* ===== พื้นหลังหลอนน่ารัก ===== */
+#bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.moon {
+  position: absolute; top: 70px; right: 8%;
+  width: 90px; height: 90px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff9a9a, #d1202d 60%, #6b0a12);
+  box-shadow: 0 0 60px 20px rgba(224, 30, 43, 0.3);
+  display: flex; align-items: center; justify-content: center;
+  color: #3a0508; font-size: 20px; font-weight: 700;
+  animation: moonGlow 5s ease-in-out infinite alternate;
+}
+.moon::after { content: "-ᴗ-"; }
+@keyframes moonGlow {
+  from { opacity: 0.25; }
+  to { opacity: 0.45; }
+}
+.star {
+  position: absolute; width: 3px; height: 3px;
+  background: white; border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.6; }
+}
+.fog {
+  position: absolute; bottom: 0; left: 0;
+  width: 200%; height: 200px;
+  background:
+    radial-gradient(ellipse at 25% 100%, rgba(224, 30, 43, 0.12), transparent 60%),
+    radial-gradient(ellipse at 75% 100%, rgba(140, 20, 40, 0.15), transparent 60%);
+  animation: fogMove 30s linear infinite;
+}
+@keyframes fogMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ghost-bg {
+  position: absolute; left: 0;
+  font-size: 40px; opacity: 0.15;
+  animation: drift linear infinite;
+}
+@keyframes drift {
+  0% { transform: translateX(-15vw) translateY(0); }
+  50% { transform: translateX(50vw) translateY(-30px); }
+  100% { transform: translateX(115vw) translateY(0); }
+}
+.peek {
+  position: absolute; font-size: 28px; opacity: 0;
+  animation: peek 2.5s ease-in-out forwards;
+}
+@keyframes peek {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  20%, 40%, 60%, 80% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.35; transform: scaleY(0.1); }
+}
+.boo {
+  position: fixed; font-size: 34px;
+  z-index: 50; pointer-events: none;
+  animation: booUp 1.5s ease-out forwards;
+}
+@keyframes booUp {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+  20% { opacity: 1; transform: translate(-50%, -70%) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -200%) scale(0.8); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ghost-bg, .fog, .peek, .boo { display: none; }
+}
+/* ===== หน้าเปิดร้าน (Intro) ===== */
+body.intro-open { overflow: hidden; }
+
+#intro {
+  position: fixed; inset: 0; z-index: 1000;
+  background: #000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  border-bottom: 4px solid var(--blood);
+  transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
+}
+/* ขอบเลือดหยดใต้ม่าน */
+#intro::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -34px; height: 34px;
+  background:
+    radial-gradient(circle at 20px 0, var(--blood) 14px, transparent 15px) 0 0 / 70px 34px repeat-x,
+    radial-gradient(circle at 50px 0, var(--blood) 9px, transparent 10px) 0 0 / 70px 22px repeat-x;
+}
+/* ดึงม่านขึ้น */
+#intro.hide { transform: translateY(calc(-100% - 60px)); }
+
+/* แสงแดงเต้นตามจังหวะหัวใจ */
+.intro-glow {
+  position: absolute;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(224, 30, 43, 0.35), transparent 65%);
+  animation: heartbeat 1.2s ease-in-out infinite;
+}
+
+/* โลโก้ + วงแหวนหมุน */
+.intro-logo-wrap { position: relative; width: 180px; height: 180px; }
+.intro-logo {
+  width: 180px; height: 180px; border-radius: 50%;
+  box-shadow: 0 0 40px rgba(224, 30, 43, 0.8);
+  animation: logoIn 1.2s cubic-bezier(0.2, 1.4, 0.4, 1) both,
+             heartbeat 1.2s 1.2s ease-in-out infinite;
+}
+@keyframes logoIn {
+  from { opacity: 0; transform: scale(0.2) rotate(-25deg); filter: blur(14px); }
+  to   { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.07); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.04); }
+}
+.intro-ring {
+  position: absolute; inset: -16px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--blood);
+  border-right-color: rgba(224, 30, 43, 0.4);
+  filter: drop-shadow(0 0 8px var(--blood));
+  animation: spinRing 1.1s linear infinite;
+  opacity: 0;
+  animation-delay: 0.6s;
+  animation-fill-mode: forwards;
+}
+@keyframes spinRing {
+  from { transform: rotate(0); opacity: 1; }
+  to { transform: rotate(360deg); opacity: 1; }
+}
+
+/* ชื่อร้านไฟนีออนกะพริบ */
+.intro-title {
+  position: relative;
+  font-family: 'Creepster', 'Mali', sans-serif;
+  font-size: 46px; font-weight: 400;
+  color: var(--blood);
+  letter-spacing: 2px;
+  margin: 28px 0 0;
+  text-shadow: 0 0 10px var(--blood), 0 0 30px rgba(224, 30, 43, 0.7);
+  animation: titleIn 0.5s 0.9s both, neon 3s 1.4s infinite;
+}
+@keyframes titleIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes neon {
+  0%, 18%, 22%, 26%, 52%, 56%, 100% { opacity: 1; }
+  20%, 24%, 54% { opacity: 0.25; text-shadow: none; }
+}
+.intro-sub {
+  position: relative;
+  margin: 4px 0 0; opacity: 0;
+  letter-spacing: 3px; color: var(--text);
+  animation: titleIn 0.5s 1.3s forwards;
+}
+
+/* แถบโหลด */
+.intro-bar {
+  position: relative;
+  width: 200px; height: 4px; margin-top: 24px;
+  background: #2a0a0e; border-radius: 999px; overflow: hidden;
+}
+.intro-bar span {
+  display: block; height: 100%; width: 0;
+  background: var(--blood);
+  box-shadow: 0 0 10px var(--blood);
+  animation: loadBar 3.5s ease-in-out forwards;
+}
+@keyframes loadBar { to { width: 100%; } }
+
+/* ปุ่มข้าม */
+.intro-skip {
+  position: absolute; bottom: 28px; right: 20px;
+  background: transparent; color: #aaa;
+  border: 1px solid #444; box-shadow: none;
+  padding: 6px 16px; font-size: 13px;
+  opacity: 0; animation: titleIn 0.4s 1s forwards;
+}
+
+/* ค้างคาวแตกกระจาย */
+.intro-bat {
+  position: absolute; left: 50%; top: 45%;
+  font-size: 26px; pointer-events: none;
+  animation: batFly 1.6s ease-out forwards;
+}
+@keyframes batFly {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(0.2); }
+  to { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.4) rotate(var(--r)); }
+}
