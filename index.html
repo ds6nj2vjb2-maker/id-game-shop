@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID-Game shop | ร้านไอดี LINE Rangers</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- ===== หน้าเปิดร้าน (Intro) ===== -->
+  <div id="intro">
+    <div class="intro-glow"></div>
+    <div class="intro-logo-wrap">
+      <div class="intro-ring"></div>
+      <img src="logo.png" alt="ID-Game shop" class="intro-logo" onerror="this.style.visibility='hidden'">
+    </div>
+    <h1 class="intro-title">ID-Game shop</h1>
+    <p class="intro-sub">ร้านไอดี LINE Rangers</p>
+    <div class="intro-bar"><span></span></div>
+    <button class="intro-skip" onclick="closeIntro()">ข้าม ›</button>
+  </div>
+
+  <!-- ===== เมนู ===== -->
+  <nav class="menu">
+    <a href="#home">หน้าแรก</a>
+    <a href="#shop">สินค้า</a>
+    <a href="#gacha">🎰 สุ่มไอดี</a>
+    <a href="#how">วิธีสั่งซื้อ</a>
+    <a href="#warranty">รับประกัน</a>
+  </nav>
+
+  <main>
+    <!-- ===== หน้าแรก ===== -->
+    <section id="home" class="page">
+      <header class="hero">
+        <img src="logo.png" alt="ID-Game shop" class="logo-img" onerror="this.style.display='none'">
+        <h1>ร้านไอดี LINE Rangers 🩸</h1>
+        <p>เรนเจอร์ครบ • รูบี้เพียบ • ตรวจสอบได้ทุกไอดี</p>
+        <a href="#shop" class="cta">ดูไอดีทั้งหมด</a>
+        <a href="#gacha" class="cta cta-alt">🎰 ให้ดวงช่วยเลือก</a>
+      </header>
+
+      <h2 class="section-title">ไอดีแนะนำประจำร้าน</h2>
+      <div class="carousel-wrap">
+        <button class="nav prev" onclick="slide(-1)">‹</button>
+        <div id="featured" class="carousel"></div>
+        <button class="nav next" onclick="slide(1)">›</button>
+      </div>
+      <div id="dots" class="dots"></div>
+    </section>
+
+    <!-- ===== สินค้า ===== -->
+    <section id="shop" class="page">
+      <h2 class="section-title">ไอดีพร้อมขาย</h2>
+      <div id="filters">
+        <button onclick="filterPrice(0, 999999)">ทั้งหมด</button>
+        <button onclick="filterPrice(0, 499)">ต่ำกว่า ฿500</button>
+        <button onclick="filterPrice(500, 999)">฿500–999</button>
+        <button onclick="filterPrice(1000, 999999)">฿1,000 ขึ้นไป</button>
+      </div>
+      <p class="hint">กด "สั่งซื้อ" แล้วระบบจะคัดลอกชื่อสินค้าให้ วางในแชทได้เลย 📋</p>
+      <div id="product-list" class="grid"></div>
+    </section>
+
+    <!-- ===== สุ่มไอดี ===== -->
+    <section id="gacha" class="page">
+      <h2 class="section-title">สุ่มไอดีให้ดวงเลือก</h2>
+      <p class="hint">เลือกไม่ถูก? ให้ดวงช่วยสุ่ม! เห็นราคาจริงก่อนตัดสินใจทุกครั้ง 🦇</p>
+
+      <div class="gacha-box">
+        <label for="budget">งบของคุณ:</label>
+        <select id="budget">
+          <option value="999999">ไม่จำกัดงบ</option>
+          <option value="19">ไม่เกิน ฿19</option>
+          <option value="49">ไม่เกิน ฿49</option>
+          <option value="69">ไม่เกิน ฿69</option>
+        </select>
+
+        <div id="gacha-screen" class="gacha-screen">❓</div>
+        <button id="gacha-btn" class="gacha-btn" onclick="spin()">🎰 สุ่มเลย!</button>
+      </div>
+
+      <div id="gacha-result"></div>
+    </section>
+
+    <!-- ===== วิธีสั่งซื้อ ===== -->
+    <section id="how" class="page">
+      <h2 class="section-title">วิธีสั่งซื้อ</h2>
+      <ol class="steps">
+        <li><b>เลือกไอดี</b> แล้วกดปุ่ม "สั่งซื้อ"</li>
+        <li><b>ทักแชท</b> วางข้อความที่คัดลอกไว้ รอแอดมินยืนยันว่าไอดียังอยู่</li>
+        <li><b>โอนเงิน</b> ผ่าน QR พร้อมเพย์ที่แอดมินส่งให้ แล้วส่งสลิป</li>
+        <li><b>รับไอดี</b> แอดมินส่งข้อมูลและช่วยเปลี่ยนข้อมูลเข้าสู่ระบบเป็นของคุณ</li>
+      </ol>
+      <a href="#shop" class="cta">ไปเลือกไอดีเลย</a>
+    </section>
+
+    <!-- ===== รับประกัน ===== -->
+    <section id="warranty" class="page">
+      <h2 class="section-title">การรับประกัน</h2>
+      <ul class="rules">
+        <li>✅ รับประกัน 7 วัน หากไอดีถูกเจ้าของเดิมดึงคืน คืนเงินเต็มจำนวน</li>
+        <li>✅ ข้อมูลไอดีตรงตามที่ลงขายทุกครั้ง</li>
+        <li>❌ ไม่รับประกันกรณีโดนแบนจากการใช้โปรแกรมโกงหลังส่งมอบ</li>
+        <li>❌ ไม่รับคืนเพราะเปลี่ยนใจหลังส่งมอบไอดีแล้ว</li>
+      </ul>
+      <p class="note">⚠️ การซื้อขายไอดีอาจขัดกับข้อตกลงของผู้พัฒนาเกม โปรดพิจารณาก่อนซื้อ</p>
+    </section>
+  </main>
+
+  <!-- ===== ท้ายเว็บ ===== -->
+  <footer>
+    <p>ติดต่อร้าน: <a id="fb-link" href="#" target="_blank">Facebook</a></p>
+    <p>© 2026 ID-Game shop</p>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>
